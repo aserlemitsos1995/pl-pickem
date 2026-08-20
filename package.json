@@ -9,6 +9,7 @@
     "lint": "eslint",
     "db:seed": "tsx prisma/seed.ts",
     "db:sync-fixtures": "tsx prisma/sync-fixtures.ts",
+    "db:sync-odds": "tsx prisma/sync-odds.ts",
     "db:import-2025-26": "tsx prisma/import-2025-26.ts"
   },
   "dependencies": {

@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { OPPONENT_CAP, halfRange, opponentClubId } from "@/lib/game-logic";
+import type { PickResult } from "@/generated/prisma/enums";
 
 export interface ClubOption {
   clubId: string;
@@ -18,6 +19,9 @@ export interface FixtureBoardRow {
   locked: boolean;
   home: ClubOption;
   away: ClubOption;
+  homeOdds: number | null;
+  drawOdds: number | null;
+  awayOdds: number | null;
 }
 
 export interface GameweekBoard {
@@ -96,6 +100,9 @@ export async function getGameweekBoard(
       locked,
       home: buildOption(f.homeClubId, f.homeClub.name, f.homeClub.crestUrl, "HOME", f.awayClubId, locked),
       away: buildOption(f.awayClubId, f.awayClub.name, f.awayClub.crestUrl, "AWAY", f.homeClubId, locked),
+      homeOdds: f.homeOdds,
+      drawOdds: f.drawOdds,
+      awayOdds: f.awayOdds,
     };
   });
 
@@ -146,8 +153,15 @@ export interface SeasonGrids {
   opponentCounts: Map<string, Map<string, number>>; // playerSeasonId -> clubId -> count
 }
 
-/** Every player's picked-clubs and picked-against grids for a season — mirrors the original spreadsheet. */
-export async function getSeasonGrids(seasonId: string): Promise<SeasonGrids> {
+/**
+ * Every player's picked-clubs and picked-against grids for a season — mirrors the original spreadsheet.
+ * A pick for a fixture that hasn't kicked off yet is only visible to the player who made it (or an admin) —
+ * everyone else's board simply doesn't reflect it until kickoff.
+ */
+export async function getSeasonGrids(
+  seasonId: string,
+  viewer: { playerSeasonId: string | null; isAdmin: boolean },
+): Promise<SeasonGrids> {
   const season = await prisma.season.findUniqueOrThrow({ where: { id: seasonId } });
   const [clubs, playerSeasons, picks] = await Promise.all([
     prisma.club.findMany({ where: { seasonId }, orderBy: { name: "asc" } }),
@@ -165,7 +179,11 @@ export async function getSeasonGrids(seasonId: string): Promise<SeasonGrids> {
     opponentCounts.set(ps.id, new Map());
   }
 
+  const now = Date.now();
   for (const p of picks) {
+    const visible = viewer.isAdmin || p.playerSeasonId === viewer.playerSeasonId || p.fixture.kickoff.getTime() <= now;
+    if (!visible) continue;
+
     const half = p.gameweek < season.secondHalfStartsAt ? firstHalfPicked : secondHalfPicked;
     half.get(p.playerSeasonId)?.add(p.clubId);
 
@@ -180,5 +198,51 @@ export async function getSeasonGrids(seasonId: string): Promise<SeasonGrids> {
     firstHalfPicked,
     secondHalfPicked,
     opponentCounts,
+  };
+}
+
+// Deliberately holds no club/result data — a hidden cell must never carry the pick it's hiding.
+export type GameweekPickCell =
+  | { visible: true; clubName: string; crestUrl: string | null; result: PickResult | null }
+  | { visible: false };
+
+export interface GameweekPicksGrid {
+  gameweeks: number[]; // descending, most recent first; only gameweeks with at least one pick
+  players: { playerSeasonId: string; teamName: string }[];
+  cells: Map<number, Map<string, GameweekPickCell>>; // gameweek -> playerSeasonId -> cell
+}
+
+/**
+ * Who picked which club, broken down by gameweek. Same visibility rule as getSeasonGrids: a pick
+ * for a fixture that hasn't kicked off yet is only visible to the player who made it (or an admin).
+ */
+export async function getGameweekPicksGrid(
+  seasonId: string,
+  viewer: { playerSeasonId: string | null; isAdmin: boolean },
+): Promise<GameweekPicksGrid> {
+  const [playerSeasons, picks] = await Promise.all([
+    prisma.playerSeason.findMany({ where: { seasonId }, orderBy: { teamName: "asc" } }),
+    prisma.pick.findMany({ where: { seasonId }, include: { club: true, fixture: true } }),
+  ]);
+
+  const now = Date.now();
+  const cells = new Map<number, Map<string, GameweekPickCell>>();
+
+  for (const p of picks) {
+    const visible = viewer.isAdmin || p.playerSeasonId === viewer.playerSeasonId || p.fixture.kickoff.getTime() <= now;
+    const cell: GameweekPickCell = visible
+      ? { visible: true, clubName: p.club.name, crestUrl: p.club.crestUrl, result: p.result }
+      : { visible: false };
+
+    if (!cells.has(p.gameweek)) cells.set(p.gameweek, new Map());
+    cells.get(p.gameweek)!.set(p.playerSeasonId, cell);
+  }
+
+  const gameweeks = [...cells.keys()].sort((a, b) => b - a);
+
+  return {
+    gameweeks,
+    players: playerSeasons.map((ps) => ({ playerSeasonId: ps.id, teamName: ps.teamName })),
+    cells,
   };
 }

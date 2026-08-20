@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { getAllSeasons, getCurrentSeason } from "@/lib/season";
-import { getSeasonGrids } from "@/lib/picks";
+import { getCurrentPlayer, getCurrentPlayerSeason } from "@/lib/session";
+import { getSeasonGrids, getGameweekPicksGrid, type GameweekPickCell } from "@/lib/picks";
 import { OPPONENT_CAP } from "@/lib/game-logic";
 
 export default async function HistoryPage({
@@ -13,7 +15,18 @@ export default async function HistoryPage({
   const current = await getCurrentSeason();
   const season = seasonLabel ? seasons.find((s) => s.label === seasonLabel) ?? current : current;
 
-  const grid = await getSeasonGrids(season.id);
+  const player = await getCurrentPlayer();
+  if (!player) redirect("/identity");
+
+  // The viewer may not have a roster spot in the season being browsed (e.g. they joined later) —
+  // that's fine, it just means none of that season's picks are "their own".
+  const identity = await getCurrentPlayerSeason(season.id);
+
+  const viewer = { playerSeasonId: identity?.playerSeason.id ?? null, isAdmin: player.isCommissioner };
+  const [grid, gameweekGrid] = await Promise.all([
+    getSeasonGrids(season.id, viewer),
+    getGameweekPicksGrid(season.id, viewer),
+  ]);
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
@@ -31,6 +44,8 @@ export default async function HistoryPage({
           ))}
         </div>
       </div>
+
+      <GameweekGridSection gameweeks={gameweekGrid.gameweeks} players={gameweekGrid.players} cells={gameweekGrid.cells} />
 
       <GridSection
         title="Clubs Picked — First Half of Season"
@@ -67,6 +82,62 @@ export default async function HistoryPage({
       />
     </div>
   );
+}
+
+function GameweekGridSection({
+  gameweeks,
+  players,
+  cells,
+}: {
+  gameweeks: number[];
+  players: { playerSeasonId: string; teamName: string }[];
+  cells: Map<number, Map<string, GameweekPickCell>>;
+}) {
+  return (
+    <div className="mt-8">
+      <h2 className="mb-2 text-sm font-semibold text-gray-600">Picks by Gameweek</h2>
+      <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white">
+        <table className="w-full text-sm">
+          <thead className="bg-gray-100 text-left text-gray-600">
+            <tr>
+              <th className="sticky left-0 bg-gray-100 px-3 py-2">GW</th>
+              {players.map((p) => (
+                <th key={p.playerSeasonId} className="px-3 py-2 text-center whitespace-nowrap">
+                  {p.teamName}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {gameweeks.map((gw) => (
+              <tr key={gw} className="border-t border-gray-100">
+                <td className="sticky left-0 bg-white px-3 py-1.5 font-medium">{gw}</td>
+                {players.map((p) => (
+                  <td key={p.playerSeasonId} className="px-3 py-1.5 text-center whitespace-nowrap">
+                    {renderGameweekCell(cells.get(gw)?.get(p.playerSeasonId))}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function renderGameweekCell(cell: GameweekPickCell | undefined) {
+  if (!cell) return <span className="text-gray-300">—</span>;
+  if (!cell.visible) return <span className="text-gray-400" title="Hidden until kickoff">Hidden</span>;
+  const resultColor =
+    cell.result === "WIN"
+      ? "text-green-600"
+      : cell.result === "TIE"
+        ? "text-amber-600"
+        : cell.result === "LOSS" || cell.result === "DNP"
+          ? "text-red-600"
+          : "text-gray-700";
+  return <span className={resultColor}>{cell.clubName}</span>;
 }
 
 function GridSection({

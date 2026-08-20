@@ -15,6 +15,11 @@ function formatKickoff(iso: string) {
   });
 }
 
+function formatOdds(odds: number | null) {
+  if (odds === null) return null;
+  return odds > 0 ? `+${odds}` : `${odds}`;
+}
+
 export default function AdminPickBoard({
   playerSeasonId,
   gameweek,
@@ -58,9 +63,12 @@ export default function AdminPickBoard({
             {f.locked && <div className="font-medium text-amber-500">Kicked off — override</div>}
           </div>
           <div className="flex flex-1 items-center justify-center gap-3">
-            <ClubButton option={f.home} loading={pending && pendingClubId === f.home.clubId} onPick={() => pick(f.home.clubId, f.fixtureId)} />
-            <span className="text-xs text-gray-400">vs</span>
-            <ClubButton option={f.away} loading={pending && pendingClubId === f.away.clubId} onPick={() => pick(f.away.clubId, f.fixtureId)} />
+            <ClubButton option={f.home} odds={f.homeOdds} loading={pending && pendingClubId === f.home.clubId} onPick={() => pick(f.home.clubId, f.fixtureId)} />
+            <div className="flex flex-col items-center text-xs text-gray-400">
+              <span>vs</span>
+              {f.drawOdds !== null && <span className="text-[11px] text-gray-400">Draw {formatOdds(f.drawOdds)}</span>}
+            </div>
+            <ClubButton option={f.away} odds={f.awayOdds} loading={pending && pendingClubId === f.away.clubId} onPick={() => pick(f.away.clubId, f.fixtureId)} />
           </div>
         </div>
       ))}
@@ -70,10 +78,12 @@ export default function AdminPickBoard({
 
 function ClubButton({
   option,
+  odds,
   loading,
   onPick,
 }: {
   option: FixtureBoardRow["home"];
+  odds: number | null;
   loading: boolean;
   onPick: () => void;
 }) {
@@ -93,6 +103,11 @@ function ClubButton({
       className={`${base} ${state}`}
     >
       {option.name}
+      {odds !== null && (
+        <span className={`block text-[11px] font-normal ${option.isCurrentPick ? "opacity-80" : "text-gray-400"}`}>
+          DK {formatOdds(odds)}
+        </span>
+      )}
       {option.isCurrentPick && <span className="block text-[11px] font-normal opacity-80">current pick</span>}
       {!option.isCurrentPick && option.disabled && (
         <span className="block text-[11px] font-normal">{option.disabledReason}</span>

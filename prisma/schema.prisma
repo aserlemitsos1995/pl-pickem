@@ -95,6 +95,11 @@ model Fixture {
   awayClub     Club          @relation("AwayClub", fields: [awayClubId], references: [id])
   homeGoals    Int?
   awayGoals    Int?
+  // DraftKings moneyline odds (American format, e.g. -250, +650), synced from The Odds API.
+  homeOdds      Int?
+  drawOdds      Int?
+  awayOdds      Int?
+  oddsUpdatedAt DateTime?
   lastSyncedAt DateTime      @default(now())
   picks        Pick[]
 

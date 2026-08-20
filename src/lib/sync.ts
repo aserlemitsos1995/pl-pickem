@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { getSeasonTeams, getSeasonMatches } from "@/lib/football-data";
+import { getEplDraftKingsOdds, normalizeClubName } from "@/lib/odds";
 
 export async function syncClubs(seasonId: string, apiSeasonYear: number) {
   const teams = await getSeasonTeams(apiSeasonYear);
@@ -63,4 +64,42 @@ export async function syncFixtures(seasonId: string, apiSeasonYear: number) {
     synced++;
   }
   return synced;
+}
+
+/**
+ * Pulls DraftKings moneyline odds for upcoming EPL matches and attaches them
+ * to the matching Fixture rows. Matches events to fixtures by normalized club
+ * full name plus home/away orientation (each pair of clubs meets exactly once
+ * per venue per season, so that pair uniquely identifies the fixture).
+ */
+export async function syncOdds(seasonId: string) {
+  const clubs = await prisma.club.findMany({ where: { seasonId } });
+  const clubByNormalizedName = new Map(clubs.map((c) => [normalizeClubName(c.fullName), c]));
+
+  const events = await getEplDraftKingsOdds();
+  let updated = 0;
+  for (const event of events) {
+    const homeClub = clubByNormalizedName.get(normalizeClubName(event.homeTeam));
+    const awayClub = clubByNormalizedName.get(normalizeClubName(event.awayTeam));
+    if (!homeClub || !awayClub) {
+      console.warn(`Skipping odds event: unrecognized club (${event.homeTeam} vs ${event.awayTeam})`);
+      continue;
+    }
+    const fixture = await prisma.fixture.findFirst({
+      where: { seasonId, homeClubId: homeClub.id, awayClubId: awayClub.id },
+    });
+    if (!fixture) continue;
+
+    await prisma.fixture.update({
+      where: { id: fixture.id },
+      data: {
+        homeOdds: event.homeOdds,
+        drawOdds: event.drawOdds,
+        awayOdds: event.awayOdds,
+        oddsUpdatedAt: new Date(),
+      },
+    });
+    updated++;
+  }
+  return updated;
 }
