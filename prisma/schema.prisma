@@ -113,7 +113,8 @@ enum PickResult {
   DNP
 }
 
-// A single player's weekly pick.
+// A single player's weekly pick. clubId/fixtureId are null when the player simply
+// never submitted a pick that gameweek — result is then DNP with 0 points.
 model Pick {
   id             String       @id @default(cuid())
   seasonId       String
@@ -121,10 +122,10 @@ model Pick {
   playerSeasonId String
   playerSeason   PlayerSeason @relation(fields: [playerSeasonId], references: [id])
   gameweek       Int
-  clubId         String
-  club           Club         @relation(fields: [clubId], references: [id])
-  fixtureId      String
-  fixture        Fixture      @relation(fields: [fixtureId], references: [id])
+  clubId         String?
+  club           Club?        @relation(fields: [clubId], references: [id])
+  fixtureId      String?
+  fixture        Fixture?     @relation(fields: [fixtureId], references: [id])
   result         PickResult?
   points         Int?
   updatedByAdmin Boolean      @default(false)

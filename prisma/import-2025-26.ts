@@ -161,12 +161,14 @@ async function main() {
     for (const half of [firstHalf, secondHalf]) {
       const seen = new Set<string>();
       for (const p of half) {
+        if (!p.clubId) continue; // DNP — nothing picked
         if (seen.has(p.clubId)) console.warn(`Half-repeat violation: playerSeason ${playerSeasonId}, club ${p.clubId}`);
         seen.add(p.clubId);
       }
     }
     const oppCounts = new Map<string, number>();
     for (const p of playerPicks) {
+      if (!p.fixture || !p.clubId) continue; // DNP — no opponent to count
       const oppId = opponentClubId(p.fixture, p.clubId);
       oppCounts.set(oppId, (oppCounts.get(oppId) ?? 0) + 1);
     }

@@ -57,9 +57,10 @@ export async function getGameweekBoard(
     prisma.pick.findUnique({ where: { playerSeasonId_gameweek: { playerSeasonId, gameweek } } }),
   ]);
 
-  const usedThisHalf = new Set(halfPicks.map((p) => p.clubId));
+  const usedThisHalf = new Set(halfPicks.map((p) => p.clubId).filter((id): id is string => id !== null));
   const opponentCounts = new Map<string, number>();
   for (const p of seasonPicks) {
+    if (!p.fixture || !p.clubId) continue; // DNP — no club/opponent to count
     const oppId = opponentClubId(p.fixture, p.clubId);
     opponentCounts.set(oppId, (opponentCounts.get(oppId) ?? 0) + 1);
   }
@@ -125,6 +126,7 @@ export async function getClubsPickedByHalf(playerSeasonId: string, seasonId: str
   const firstHalf = new Set<string>();
   const secondHalf = new Set<string>();
   for (const p of picks) {
+    if (!p.clubId) continue; // DNP — nothing picked
     if (p.gameweek < season.secondHalfStartsAt) firstHalf.add(p.clubId);
     else secondHalf.add(p.clubId);
   }
@@ -139,6 +141,7 @@ export async function getOpponentCounts(playerSeasonId: string): Promise<Map<str
   });
   const counts = new Map<string, number>();
   for (const p of picks) {
+    if (!p.fixture || !p.clubId) continue; // DNP — no opponent to count
     const oppId = opponentClubId(p.fixture, p.clubId);
     counts.set(oppId, (counts.get(oppId) ?? 0) + 1);
   }
@@ -181,6 +184,7 @@ export async function getSeasonGrids(
 
   const now = Date.now();
   for (const p of picks) {
+    if (!p.fixture || !p.clubId) continue; // DNP — nothing picked, nothing to show in these grids
     const visible = viewer.isAdmin || p.playerSeasonId === viewer.playerSeasonId || p.fixture.kickoff.getTime() <= now;
     if (!visible) continue;
 
@@ -202,8 +206,9 @@ export async function getSeasonGrids(
 }
 
 // Deliberately holds no club/result data — a hidden cell must never carry the pick it's hiding.
+// clubName is null when the player didn't submit a pick that gameweek (DNP).
 export type GameweekPickCell =
-  | { visible: true; clubName: string; crestUrl: string | null; result: PickResult | null }
+  | { visible: true; clubName: string | null; crestUrl: string | null; result: PickResult | null }
   | { visible: false };
 
 export interface GameweekPicksGrid {
@@ -229,9 +234,13 @@ export async function getGameweekPicksGrid(
   const cells = new Map<number, Map<string, GameweekPickCell>>();
 
   for (const p of picks) {
-    const visible = viewer.isAdmin || p.playerSeasonId === viewer.playerSeasonId || p.fixture.kickoff.getTime() <= now;
+    const visible =
+      viewer.isAdmin ||
+      p.playerSeasonId === viewer.playerSeasonId ||
+      !p.fixture ||
+      p.fixture.kickoff.getTime() <= now;
     const cell: GameweekPickCell = visible
-      ? { visible: true, clubName: p.club.name, crestUrl: p.club.crestUrl, result: p.result }
+      ? { visible: true, clubName: p.club?.name ?? null, crestUrl: p.club?.crestUrl ?? null, result: p.result }
       : { visible: false };
 
     if (!cells.has(p.gameweek)) cells.set(p.gameweek, new Map());

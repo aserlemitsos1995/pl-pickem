@@ -10,11 +10,11 @@ export default async function NavBar() {
 
   return (
     <header className="border-b border-gray-200 bg-white">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+      <div className="mx-auto flex max-w-5xl flex-col items-center gap-2 px-4 py-3 sm:flex-row sm:justify-between">
         <Link href="/picks" className="font-bold text-purple-700">
           PL Pick&apos;Em
         </Link>
-        <nav className="flex items-center gap-5 text-sm font-medium text-gray-600">
+        <nav className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm font-medium text-gray-600">
           <Link href="/picks" className="hover:text-purple-700">
             Make Pick
           </Link>
@@ -24,14 +24,9 @@ export default async function NavBar() {
           <Link href="/history" className="hover:text-purple-700">
             History
           </Link>
-          {player?.isCommissioner && (
-            <Link href="/admin" className="hover:text-purple-700">
-              Admin
-            </Link>
-          )}
           {player ? (
             <form action={signOutIdentity}>
-              <button type="submit" className="text-gray-400 hover:text-purple-700">
+              <button type="submit" className="max-w-[10rem] truncate text-gray-400 hover:text-purple-700">
                 {identity?.playerSeason.teamName ?? player.slug} · switch
               </button>
             </form>

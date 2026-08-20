@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 
 const COOKIE_NAME = "pl_pickem_player";
+const ADMIN_MODE_COOKIE = "pl_pickem_admin_mode";
 
 /** No passwords: the cookie just remembers which player slug you identified as. */
 export async function getCurrentPlayerSlug(): Promise<string | null> {
@@ -39,4 +40,25 @@ export async function getCurrentPlayerSeason(seasonId: string) {
   });
   if (!playerSeason) return null;
   return { player, playerSeason };
+}
+
+/** Whether the commissioner has unlocked admin mode with the PIN this session. */
+export async function isAdminModeUnlocked(): Promise<boolean> {
+  const store = await cookies();
+  return store.get(ADMIN_MODE_COOKIE)?.value === "1";
+}
+
+export async function unlockAdminMode() {
+  const store = await cookies();
+  store.set(ADMIN_MODE_COOKIE, "1", {
+    httpOnly: true,
+    sameSite: "lax",
+    maxAge: 60 * 60 * 12,
+    path: "/",
+  });
+}
+
+export async function lockAdminMode() {
+  const store = await cookies();
+  store.delete(ADMIN_MODE_COOKIE);
 }

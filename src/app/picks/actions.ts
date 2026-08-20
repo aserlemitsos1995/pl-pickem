@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getCurrentSeason } from "@/lib/season";
-import { getCurrentPlayerSeason, getCurrentPlayer } from "@/lib/session";
+import { getCurrentPlayerSeason, getCurrentPlayer, isAdminModeUnlocked } from "@/lib/session";
 import { validatePick, PickValidationError } from "@/lib/game-logic";
 
 export type SubmitPickResult = { ok: true } | { ok: false; error: string };
@@ -51,6 +51,7 @@ export async function adminOverridePick(
 ): Promise<SubmitPickResult> {
   const admin = await getCurrentPlayer();
   if (!admin?.isCommissioner) return { ok: false, error: "Only the commissioner can override picks." };
+  if (!(await isAdminModeUnlocked())) return { ok: false, error: "Enter the admin PIN to make overrides." };
 
   const season = await getCurrentSeason();
   try {

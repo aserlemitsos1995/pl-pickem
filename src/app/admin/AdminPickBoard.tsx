@@ -56,17 +56,17 @@ export default function AdminPickBoard({
       {fixtures.map((f) => (
         <div
           key={f.fixtureId}
-          className="flex items-center justify-between gap-4 rounded-lg border border-gray-200 bg-white px-4 py-3 shadow-sm"
+          className="flex flex-col gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:gap-4"
         >
-          <div className="w-40 shrink-0 text-xs text-gray-500">
+          <div className="text-xs text-gray-500 sm:w-32 sm:shrink-0">
             {formatKickoff(f.kickoff)}
             {f.locked && <div className="font-medium text-amber-500">Kicked off — override</div>}
           </div>
-          <div className="flex flex-1 items-center justify-center gap-3">
+          <div className="flex flex-1 items-center justify-center gap-2 sm:gap-3">
             <ClubButton option={f.home} odds={f.homeOdds} loading={pending && pendingClubId === f.home.clubId} onPick={() => pick(f.home.clubId, f.fixtureId)} />
-            <div className="flex flex-col items-center text-xs text-gray-400">
+            <div className="flex shrink-0 flex-col items-center text-xs text-gray-400">
               <span>vs</span>
-              {f.drawOdds !== null && <span className="text-[11px] text-gray-400">Draw {formatOdds(f.drawOdds)}</span>}
+              {f.drawOdds !== null && <span className="text-xs text-gray-400">Draw {formatOdds(f.drawOdds)}</span>}
             </div>
             <ClubButton option={f.away} odds={f.awayOdds} loading={pending && pendingClubId === f.away.clubId} onPick={() => pick(f.away.clubId, f.fixtureId)} />
           </div>
@@ -87,7 +87,7 @@ function ClubButton({
   loading: boolean;
   onPick: () => void;
 }) {
-  const base = "flex-1 rounded-md border px-3 py-2 text-sm font-medium transition min-w-[9rem] text-center";
+  const base = "min-w-0 flex-1 rounded-md border px-2 py-2 text-sm font-medium transition text-center sm:px-3";
   const state = option.isCurrentPick
     ? "border-purple-600 bg-purple-600 text-white"
     : option.disabled
@@ -104,13 +104,13 @@ function ClubButton({
     >
       {option.name}
       {odds !== null && (
-        <span className={`block text-[11px] font-normal ${option.isCurrentPick ? "opacity-80" : "text-gray-400"}`}>
+        <span className={`block text-xs font-normal ${option.isCurrentPick ? "opacity-80" : "text-gray-400"}`}>
           DK {formatOdds(odds)}
         </span>
       )}
-      {option.isCurrentPick && <span className="block text-[11px] font-normal opacity-80">current pick</span>}
+      {option.isCurrentPick && <span className="block text-xs font-normal opacity-80">current pick</span>}
       {!option.isCurrentPick && option.disabled && (
-        <span className="block text-[11px] font-normal">{option.disabledReason}</span>
+        <span className="block text-xs font-normal">{option.disabledReason}</span>
       )}
     </button>
   );

@@ -2,18 +2,51 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getCurrentSeason, getDefaultGameweek } from "@/lib/season";
-import { getCurrentPlayer } from "@/lib/session";
+import { getCurrentPlayer, isAdminModeUnlocked } from "@/lib/session";
 import { getGameweekBoard } from "@/lib/picks";
 import AdminPickBoard from "./AdminPickBoard";
+import { unlockAdmin, exitAdminMode } from "./actions";
 
 export default async function AdminPage({
   searchParams,
 }: {
-  searchParams: Promise<{ player?: string; gw?: string }>;
+  searchParams: Promise<{ player?: string; gw?: string; error?: string }>;
 }) {
   const admin = await getCurrentPlayer();
   if (!admin) redirect("/identity");
   if (!admin.isCommissioner) redirect("/picks");
+
+  const { error } = await searchParams;
+  const unlocked = await isAdminModeUnlocked();
+  if (!unlocked) {
+    return (
+      <div className="mx-auto max-w-sm px-4 py-8">
+        <h1 className="text-xl font-bold">Admin</h1>
+        <p className="mt-1 text-sm text-gray-500">Enter the admin PIN to make pick overrides.</p>
+        <form action={unlockAdmin} className="mt-6 space-y-3">
+          {error && (
+            <div className="rounded-md bg-red-50 px-4 py-2 text-sm text-red-700 border border-red-200">
+              Incorrect PIN.
+            </div>
+          )}
+          <input
+            type="password"
+            name="pin"
+            inputMode="numeric"
+            autoFocus
+            className="w-full rounded border border-gray-300 px-3 py-2 text-center text-lg tracking-widest focus:border-purple-500 focus:outline-none"
+            placeholder="PIN"
+          />
+          <button
+            type="submit"
+            className="w-full rounded border border-purple-600 bg-purple-600 px-3 py-2 text-sm font-medium text-white hover:bg-purple-700"
+          >
+            Unlock
+          </button>
+        </form>
+      </div>
+    );
+  }
 
   const season = await getCurrentSeason();
   const playerSeasons = await prisma.playerSeason.findMany({
@@ -39,7 +72,14 @@ export default async function AdminPage({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
-      <h1 className="text-xl font-bold">Admin — Override Picks</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-xl font-bold">Admin — Override Picks</h1>
+        <form action={exitAdminMode}>
+          <button type="submit" className="text-sm text-gray-400 hover:text-purple-700">
+            Exit admin mode
+          </button>
+        </form>
+      </div>
       <p className="mt-1 text-sm text-gray-500">
         Commissioner override: bypasses the kickoff deadline. Half-repeat and opponent-cap rules still apply.
       </p>

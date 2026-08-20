@@ -101,7 +101,7 @@ export async function validatePick(args: ValidatePickArgs) {
     include: { fixture: true },
   });
   const timesPickedAgainstOpponent = seasonPicks.filter(
-    (p) => opponentClubId(p.fixture, p.clubId) === opponentId,
+    (p) => p.fixture && p.clubId && opponentClubId(p.fixture, p.clubId) === opponentId,
   ).length;
   if (timesPickedAgainstOpponent >= OPPONENT_CAP) {
     throw new PickValidationError(
@@ -121,6 +121,7 @@ export async function settlePicks(seasonId: string) {
 
   let settled = 0;
   for (const pick of picks) {
+    if (!pick.fixture || !pick.clubId) continue;
     const outcome = computeResult(pick.fixture, pick.clubId);
     if (!outcome) continue;
     await prisma.pick.update({

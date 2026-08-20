@@ -45,34 +45,36 @@ export default async function TablePage({
         </div>
       </div>
 
-      <table className="mt-6 w-full overflow-hidden rounded-lg border border-gray-200 bg-white text-sm">
-        <thead className="bg-gray-100 text-left text-gray-600">
-          <tr>
-            <th className="px-4 py-2">#</th>
-            <th className="px-4 py-2">Team</th>
-            <th className="px-4 py-2">Manager</th>
-            <th className="px-4 py-2 text-center">P</th>
-            <th className="px-4 py-2 text-center">W</th>
-            <th className="px-4 py-2 text-center">T</th>
-            <th className="px-4 py-2 text-center">L</th>
-            <th className="px-4 py-2 text-right">Pts</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((r, i) => (
-            <tr key={r.teamName} className="border-t border-gray-100">
-              <td className="px-4 py-2 text-gray-400">{i + 1}</td>
-              <td className="px-4 py-2 font-medium">{r.teamName}</td>
-              <td className="px-4 py-2 text-gray-500">{r.managerName}</td>
-              <td className="px-4 py-2 text-center">{r.played}</td>
-              <td className="px-4 py-2 text-center">{r.wins}</td>
-              <td className="px-4 py-2 text-center">{r.ties}</td>
-              <td className="px-4 py-2 text-center">{r.losses}</td>
-              <td className="px-4 py-2 text-right font-bold">{r.points}</td>
+      <div className="mt-6 overflow-x-auto rounded-lg border border-gray-200 bg-white">
+        <table className="w-full text-sm">
+          <thead className="text-left text-gray-600">
+            <tr>
+              <th className="sticky top-0 z-10 bg-gray-100 px-4 py-2">#</th>
+              <th className="sticky top-0 z-10 bg-gray-100 px-4 py-2 whitespace-nowrap">Team</th>
+              <th className="sticky top-0 z-10 bg-gray-100 px-4 py-2 whitespace-nowrap">Manager</th>
+              <th className="sticky top-0 z-10 bg-gray-100 px-4 py-2 text-center">P</th>
+              <th className="sticky top-0 z-10 bg-gray-100 px-4 py-2 text-center">W</th>
+              <th className="sticky top-0 z-10 bg-gray-100 px-4 py-2 text-center">T</th>
+              <th className="sticky top-0 z-10 bg-gray-100 px-4 py-2 text-center">L</th>
+              <th className="sticky top-0 z-10 bg-gray-100 px-4 py-2 text-right">Pts</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {rows.map((r, i) => (
+              <tr key={r.teamName} className="border-t border-gray-100">
+                <td className="px-4 py-2 text-gray-400">{i + 1}</td>
+                <td className="px-4 py-2 font-medium whitespace-nowrap">{r.teamName}</td>
+                <td className="px-4 py-2 whitespace-nowrap text-gray-500">{r.managerName}</td>
+                <td className="px-4 py-2 text-center">{r.played}</td>
+                <td className="px-4 py-2 text-center">{r.wins}</td>
+                <td className="px-4 py-2 text-center">{r.ties}</td>
+                <td className="px-4 py-2 text-center">{r.losses}</td>
+                <td className="px-4 py-2 text-right font-bold">{r.points}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

@@ -98,11 +98,11 @@ function GameweekGridSection({
       <h2 className="mb-2 text-sm font-semibold text-gray-600">Picks by Gameweek</h2>
       <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white">
         <table className="w-full text-sm">
-          <thead className="bg-gray-100 text-left text-gray-600">
+          <thead className="text-left text-gray-600">
             <tr>
-              <th className="sticky left-0 bg-gray-100 px-3 py-2">GW</th>
+              <th className="sticky top-0 left-0 z-20 bg-gray-100 px-3 py-2">GW</th>
               {players.map((p) => (
-                <th key={p.playerSeasonId} className="px-3 py-2 text-center whitespace-nowrap">
+                <th key={p.playerSeasonId} className="sticky top-0 z-10 bg-gray-100 px-3 py-2 text-center whitespace-nowrap">
                   {p.teamName}
                 </th>
               ))}
@@ -111,7 +111,7 @@ function GameweekGridSection({
           <tbody>
             {gameweeks.map((gw) => (
               <tr key={gw} className="border-t border-gray-100">
-                <td className="sticky left-0 bg-white px-3 py-1.5 font-medium">{gw}</td>
+                <td className="sticky left-0 z-10 bg-white px-3 py-1.5 font-medium">{gw}</td>
                 {players.map((p) => (
                   <td key={p.playerSeasonId} className="px-3 py-1.5 text-center whitespace-nowrap">
                     {renderGameweekCell(cells.get(gw)?.get(p.playerSeasonId))}
@@ -129,6 +129,7 @@ function GameweekGridSection({
 function renderGameweekCell(cell: GameweekPickCell | undefined) {
   if (!cell) return <span className="text-gray-300">—</span>;
   if (!cell.visible) return <span className="text-gray-400" title="Hidden until kickoff">Hidden</span>;
+  if (!cell.clubName) return <span className="text-red-600">DNP</span>;
   const resultColor =
     cell.result === "WIN"
       ? "text-green-600"
@@ -156,11 +157,11 @@ function GridSection({
       <h2 className="mb-2 text-sm font-semibold text-gray-600">{title}</h2>
       <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white">
         <table className="w-full text-sm">
-          <thead className="bg-gray-100 text-left text-gray-600">
+          <thead className="text-left text-gray-600">
             <tr>
-              <th className="sticky left-0 bg-gray-100 px-3 py-2">Club</th>
+              <th className="sticky top-0 left-0 z-20 bg-gray-100 px-3 py-2">Club</th>
               {players.map((p) => (
-                <th key={p.playerSeasonId} className="px-3 py-2 text-center whitespace-nowrap">
+                <th key={p.playerSeasonId} className="sticky top-0 z-10 bg-gray-100 px-3 py-2 text-center whitespace-nowrap">
                   {p.teamName}
                 </th>
               ))}
@@ -169,7 +170,7 @@ function GridSection({
           <tbody>
             {clubs.map((c) => (
               <tr key={c.id} className="border-t border-gray-100">
-                <td className="sticky left-0 bg-white px-3 py-1.5 font-medium whitespace-nowrap">{c.name}</td>
+                <td className="sticky left-0 z-10 bg-white px-3 py-1.5 font-medium whitespace-nowrap">{c.name}</td>
                 {players.map((p) => (
                   <td key={p.playerSeasonId} className="px-3 py-1.5 text-center">
                     {renderCell(c.id, p.playerSeasonId)}
