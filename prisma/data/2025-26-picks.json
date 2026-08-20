@@ -1,0 +1,762 @@
+[
+  {
+    "gameweek": 1,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Spurs"
+  },
+  {
+    "gameweek": 1,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "West Ham"
+  },
+  {
+    "gameweek": 1,
+    "team": "AC Foley",
+    "selectedClub": "Nott'm Forest"
+  },
+  {
+    "gameweek": 1,
+    "team": "Jarvis United",
+    "selectedClub": "Spurs"
+  },
+  {
+    "gameweek": 2,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Bournemouth"
+  },
+  {
+    "gameweek": 2,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Sunderland"
+  },
+  {
+    "gameweek": 2,
+    "team": "AC Foley",
+    "selectedClub": "Leeds"
+  },
+  {
+    "gameweek": 2,
+    "team": "Jarvis United",
+    "selectedClub": "Chelsea"
+  },
+  {
+    "gameweek": 3,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Nott'm Forest"
+  },
+  {
+    "gameweek": 3,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Nott'm Forest"
+  },
+  {
+    "gameweek": 3,
+    "team": "AC Foley",
+    "selectedClub": "Newcastle"
+  },
+  {
+    "gameweek": 3,
+    "team": "Jarvis United",
+    "selectedClub": "Man City"
+  },
+  {
+    "gameweek": 4,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Crystal Palace"
+  },
+  {
+    "gameweek": 4,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Newcastle"
+  },
+  {
+    "gameweek": 4,
+    "team": "AC Foley",
+    "selectedClub": "Fulham"
+  },
+  {
+    "gameweek": 4,
+    "team": "Jarvis United",
+    "selectedClub": "Newcastle"
+  },
+  {
+    "gameweek": 5,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Fulham"
+  },
+  {
+    "gameweek": 5,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Fulham"
+  },
+  {
+    "gameweek": 5,
+    "team": "AC Foley",
+    "selectedClub": "Aston Villa"
+  },
+  {
+    "gameweek": 5,
+    "team": "Jarvis United",
+    "selectedClub": "Aston Villa"
+  },
+  {
+    "gameweek": 6,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Man City"
+  },
+  {
+    "gameweek": 6,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Bournemouth"
+  },
+  {
+    "gameweek": 6,
+    "team": "AC Foley",
+    "selectedClub": "Everton"
+  },
+  {
+    "gameweek": 6,
+    "team": "Jarvis United",
+    "selectedClub": "Everton"
+  },
+  {
+    "gameweek": 7,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Aston Villa"
+  },
+  {
+    "gameweek": 7,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Arsenal"
+  },
+  {
+    "gameweek": 7,
+    "team": "AC Foley",
+    "selectedClub": "Brighton"
+  },
+  {
+    "gameweek": 7,
+    "team": "Jarvis United",
+    "selectedClub": "Brighton"
+  },
+  {
+    "gameweek": 8,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Sunderland"
+  },
+  {
+    "gameweek": 8,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Man City"
+  },
+  {
+    "gameweek": 8,
+    "team": "AC Foley",
+    "selectedClub": "Chelsea"
+  },
+  {
+    "gameweek": 8,
+    "team": "Jarvis United",
+    "selectedClub": "Leeds"
+  },
+  {
+    "gameweek": 9,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Chelsea"
+  },
+  {
+    "gameweek": 9,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Man Utd"
+  },
+  {
+    "gameweek": 9,
+    "team": "AC Foley",
+    "selectedClub": "Bournemouth"
+  },
+  {
+    "gameweek": 9,
+    "team": "Jarvis United",
+    "selectedClub": "West Ham"
+  },
+  {
+    "gameweek": 10,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Brighton"
+  },
+  {
+    "gameweek": 10,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Crystal Palace"
+  },
+  {
+    "gameweek": 10,
+    "team": "AC Foley",
+    "selectedClub": "Crystal Palace"
+  },
+  {
+    "gameweek": 10,
+    "team": "Jarvis United",
+    "selectedClub": "Fulham"
+  },
+  {
+    "gameweek": 11,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Everton"
+  },
+  {
+    "gameweek": 11,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Leeds"
+  },
+  {
+    "gameweek": 11,
+    "team": "AC Foley",
+    "selectedClub": "Arsenal"
+  },
+  {
+    "gameweek": 11,
+    "team": "Jarvis United",
+    "selectedClub": "Arsenal"
+  },
+  {
+    "gameweek": 12,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Liverpool"
+  },
+  {
+    "gameweek": 12,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Liverpool"
+  },
+  {
+    "gameweek": 12,
+    "team": "AC Foley",
+    "selectedClub": "Man City"
+  },
+  {
+    "gameweek": 12,
+    "team": "Jarvis United",
+    "selectedClub": "Crystal Palace"
+  },
+  {
+    "gameweek": 13,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Arsenal"
+  },
+  {
+    "gameweek": 13,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Aston Villa"
+  },
+  {
+    "gameweek": 13,
+    "team": "AC Foley",
+    "selectedClub": "West Ham"
+  },
+  {
+    "gameweek": 13,
+    "team": "Jarvis United",
+    "selectedClub": "Liverpool"
+  },
+  {
+    "gameweek": 14,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Newcastle"
+  },
+  {
+    "gameweek": 14,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Spurs"
+  },
+  {
+    "gameweek": 14,
+    "team": "AC Foley",
+    "selectedClub": "Sunderland"
+  },
+  {
+    "gameweek": 14,
+    "team": "Jarvis United",
+    "selectedClub": "Wolves"
+  },
+  {
+    "gameweek": 15,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Man Utd"
+  },
+  {
+    "gameweek": 15,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Chelsea"
+  },
+  {
+    "gameweek": 15,
+    "team": "AC Foley",
+    "selectedClub": "Liverpool"
+  },
+  {
+    "gameweek": 15,
+    "team": "Jarvis United",
+    "selectedClub": "Brentford"
+  },
+  {
+    "gameweek": 16,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Brentford"
+  },
+  {
+    "gameweek": 16,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Burnley"
+  },
+  {
+    "gameweek": 16,
+    "team": "AC Foley",
+    "selectedClub": "Spurs"
+  },
+  {
+    "gameweek": 16,
+    "team": "Jarvis United",
+    "selectedClub": "Man Utd"
+  },
+  {
+    "gameweek": 17,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Leeds"
+  },
+  {
+    "gameweek": 17,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Brighton"
+  },
+  {
+    "gameweek": 17,
+    "team": "AC Foley",
+    "selectedClub": "Brentford"
+  },
+  {
+    "gameweek": 17,
+    "team": "Jarvis United",
+    "selectedClub": "Bournemouth"
+  },
+  {
+    "gameweek": 18,
+    "team": "Serlemitsos FC",
+    "selectedClub": "West Ham"
+  },
+  {
+    "gameweek": 18,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Everton"
+  },
+  {
+    "gameweek": 18,
+    "team": "AC Foley",
+    "selectedClub": "Burnley"
+  },
+  {
+    "gameweek": 18,
+    "team": "Jarvis United",
+    "selectedClub": "Burnley"
+  },
+  {
+    "gameweek": 19,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Burnley"
+  },
+  {
+    "gameweek": 19,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Brentford"
+  },
+  {
+    "gameweek": 19,
+    "team": "AC Foley",
+    "selectedClub": "Man Utd"
+  },
+  {
+    "gameweek": 19,
+    "team": "Jarvis United",
+    "selectedClub": "Nott'm Forest"
+  },
+  {
+    "gameweek": 20,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Everton"
+  },
+  {
+    "gameweek": 20,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Leeds"
+  },
+  {
+    "gameweek": 20,
+    "team": "AC Foley",
+    "selectedClub": "Wolves"
+  },
+  {
+    "gameweek": 20,
+    "team": "Jarvis United",
+    "selectedClub": "Everton"
+  },
+  {
+    "gameweek": 21,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Newcastle"
+  },
+  {
+    "gameweek": 21,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Bournemouth"
+  },
+  {
+    "gameweek": 21,
+    "team": "AC Foley",
+    "selectedClub": "Burnley"
+  },
+  {
+    "gameweek": 21,
+    "team": "Jarvis United",
+    "selectedClub": "Arsenal"
+  },
+  {
+    "gameweek": 22,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Wolves"
+  },
+  {
+    "gameweek": 22,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Sunderland"
+  },
+  {
+    "gameweek": 22,
+    "team": "AC Foley",
+    "selectedClub": "Liverpool"
+  },
+  {
+    "gameweek": 22,
+    "team": "Jarvis United",
+    "selectedClub": "Brighton"
+  },
+  {
+    "gameweek": 23,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Man City"
+  },
+  {
+    "gameweek": 23,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Brentford"
+  },
+  {
+    "gameweek": 23,
+    "team": "AC Foley",
+    "selectedClub": "Man City"
+  },
+  {
+    "gameweek": 23,
+    "team": "Jarvis United",
+    "selectedClub": "Chelsea"
+  },
+  {
+    "gameweek": 24,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Chelsea"
+  },
+  {
+    "gameweek": 24,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Man Utd"
+  },
+  {
+    "gameweek": 24,
+    "team": "AC Foley",
+    "selectedClub": "Chelsea"
+  },
+  {
+    "gameweek": 24,
+    "team": "Jarvis United",
+    "selectedClub": "Man City"
+  },
+  {
+    "gameweek": 25,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Leeds"
+  },
+  {
+    "gameweek": 25,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Fulham"
+  },
+  {
+    "gameweek": 25,
+    "team": "AC Foley",
+    "selectedClub": "Nott'm Forest"
+  },
+  {
+    "gameweek": 25,
+    "team": "Jarvis United",
+    "selectedClub": "Newcastle"
+  },
+  {
+    "gameweek": 26,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Crystal Palace"
+  },
+  {
+    "gameweek": 26,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Nott'm Forest"
+  },
+  {
+    "gameweek": 26,
+    "team": "AC Foley",
+    "selectedClub": "Crystal Palace"
+  },
+  {
+    "gameweek": 26,
+    "team": "Jarvis United",
+    "selectedClub": "Brentford"
+  },
+  {
+    "gameweek": 27,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Aston Villa"
+  },
+  {
+    "gameweek": 27,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Chelsea"
+  },
+  {
+    "gameweek": 27,
+    "team": "AC Foley",
+    "selectedClub": "Brentford"
+  },
+  {
+    "gameweek": 27,
+    "team": "Jarvis United",
+    "selectedClub": "Spurs"
+  },
+  {
+    "gameweek": 28,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Arsenal"
+  },
+  {
+    "gameweek": 28,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Liverpool"
+  },
+  {
+    "gameweek": 28,
+    "team": "AC Foley",
+    "selectedClub": "Fulham"
+  },
+  {
+    "gameweek": 28,
+    "team": "Jarvis United",
+    "selectedClub": "Liverpool"
+  },
+  {
+    "gameweek": 29,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Fulham"
+  },
+  {
+    "gameweek": 29,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Man City"
+  },
+  {
+    "gameweek": 29,
+    "team": "AC Foley",
+    "selectedClub": "Everton"
+  },
+  {
+    "gameweek": 29,
+    "team": "Jarvis United",
+    "selectedClub": "Sunderland"
+  },
+  {
+    "gameweek": 30,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Nott'm Forest"
+  },
+  {
+    "gameweek": 30,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Crystal Palace"
+  },
+  {
+    "gameweek": 30,
+    "team": "AC Foley",
+    "selectedClub": "Man Utd"
+  },
+  {
+    "gameweek": 30,
+    "team": "Jarvis United",
+    "selectedClub": "Crystal Palace"
+  },
+  {
+    "gameweek": 31,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Spurs"
+  },
+  {
+    "gameweek": 31,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Aston Villa"
+  },
+  {
+    "gameweek": 31,
+    "team": "AC Foley",
+    "selectedClub": "Aston Villa"
+  },
+  {
+    "gameweek": 31,
+    "team": "Jarvis United",
+    "selectedClub": "Fulham"
+  },
+  {
+    "gameweek": 32,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Brentford"
+  },
+  {
+    "gameweek": 32,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Burnley"
+  },
+  {
+    "gameweek": 32,
+    "team": "AC Foley",
+    "selectedClub": "Sunderland"
+  },
+  {
+    "gameweek": 32,
+    "team": "Jarvis United",
+    "selectedClub": "Aston Villa"
+  },
+  {
+    "gameweek": 33,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Brighton"
+  },
+  {
+    "gameweek": 33,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Everton"
+  },
+  {
+    "gameweek": 33,
+    "team": "AC Foley",
+    "selectedClub": "Brighton"
+  },
+  {
+    "gameweek": 33,
+    "team": "Jarvis United",
+    "selectedClub": "Man Utd"
+  },
+  {
+    "gameweek": 34,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Sunderland"
+  },
+  {
+    "gameweek": 34,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "West Ham"
+  },
+  {
+    "gameweek": 34,
+    "team": "AC Foley",
+    "selectedClub": "Arsenal"
+  },
+  {
+    "gameweek": 34,
+    "team": "Jarvis United",
+    "selectedClub": "Wolves"
+  },
+  {
+    "gameweek": 35,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Bournemouth"
+  },
+  {
+    "gameweek": 35,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Newcastle"
+  },
+  {
+    "gameweek": 35,
+    "team": "AC Foley",
+    "selectedClub": "West Ham"
+  },
+  {
+    "gameweek": 35,
+    "team": "Jarvis United",
+    "selectedClub": "Bournemouth"
+  },
+  {
+    "gameweek": 36,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Man Utd"
+  },
+  {
+    "gameweek": 36,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Brighton"
+  },
+  {
+    "gameweek": 36,
+    "team": "AC Foley",
+    "selectedClub": "Bournemouth"
+  },
+  {
+    "gameweek": 36,
+    "team": "Jarvis United",
+    "selectedClub": "Nott'm Forest"
+  },
+  {
+    "gameweek": 37,
+    "team": "Serlemitsos FC",
+    "selectedClub": "West Ham"
+  },
+  {
+    "gameweek": 37,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Arsenal"
+  },
+  {
+    "gameweek": 37,
+    "team": "AC Foley",
+    "selectedClub": "Leeds"
+  },
+  {
+    "gameweek": 37,
+    "team": "Jarvis United",
+    "selectedClub": "Leeds"
+  },
+  {
+    "gameweek": 38,
+    "team": "Serlemitsos FC",
+    "selectedClub": "Liverpool"
+  },
+  {
+    "gameweek": 38,
+    "team": "Mudaliar Athletic",
+    "selectedClub": "Spurs"
+  },
+  {
+    "gameweek": 38,
+    "team": "AC Foley",
+    "selectedClub": "Newcastle"
+  },
+  {
+    "gameweek": 38,
+    "team": "Jarvis United",
+    "selectedClub": "West Ham"
+  }
+]

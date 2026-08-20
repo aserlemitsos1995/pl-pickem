@@ -1,0 +1,130 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// A real person who manages a team across seasons. Identity is chosen
+// client-side (no password) by picking a PlayerSeason for the current season.
+model Player {
+  id            String         @id @default(cuid())
+  slug          String         @unique
+  isCommissioner Boolean       @default(false)
+  createdAt     DateTime       @default(now())
+  seasons       PlayerSeason[]
+}
+
+// One Premier League season/year of the pick'em game.
+model Season {
+  id             String         @id @default(cuid())
+  label          String         @unique // e.g. "2026-27"
+  apiSeasonYear  Int            @unique // football-data.org season query param, e.g. 2026
+  startDate      DateTime
+  endDate        DateTime
+  isCurrent      Boolean        @default(false)
+  totalGameweeks Int            @default(38)
+  secondHalfStartsAt Int        @default(20) // first gameweek of the second half
+  clubs          Club[]
+  fixtures       Fixture[]
+  playerSeasons  PlayerSeason[]
+  picks          Pick[]
+}
+
+// A player's participation in a given season (handles renames / roster changes).
+model PlayerSeason {
+  id          String   @id @default(cuid())
+  seasonId    String
+  season      Season   @relation(fields: [seasonId], references: [id])
+  playerId    String
+  player      Player   @relation(fields: [playerId], references: [id])
+  teamName    String
+  managerName String
+  active      Boolean  @default(true)
+  picks       Pick[]
+
+  @@unique([seasonId, playerId])
+}
+
+// One of the 20 PL clubs, scoped to a season (rosters change year to year).
+model Club {
+  id            String   @id @default(cuid())
+  seasonId      String
+  season        Season   @relation(fields: [seasonId], references: [id])
+  apiTeamId     Int
+  name          String // short display name, e.g. "Arsenal"
+  fullName      String // e.g. "Arsenal FC"
+  crestUrl      String?
+  homeFixtures  Fixture[] @relation("HomeClub")
+  awayFixtures  Fixture[] @relation("AwayClub")
+  picks         Pick[]
+
+  @@unique([seasonId, apiTeamId])
+}
+
+enum FixtureStatus {
+  SCHEDULED
+  TIMED
+  IN_PLAY
+  PAUSED
+  FINISHED
+  POSTPONED
+  SUSPENDED
+  CANCELLED
+  AWARDED
+}
+
+// A real PL fixture, synced from football-data.org. `gameweek` is stable even
+// if the match is postponed and replayed on a different calendar date.
+model Fixture {
+  id           String        @id @default(cuid())
+  seasonId     String
+  season       Season        @relation(fields: [seasonId], references: [id])
+  apiMatchId   Int           @unique
+  gameweek     Int
+  kickoff      DateTime
+  status       FixtureStatus @default(SCHEDULED)
+  homeClubId   String
+  homeClub     Club          @relation("HomeClub", fields: [homeClubId], references: [id])
+  awayClubId   String
+  awayClub     Club          @relation("AwayClub", fields: [awayClubId], references: [id])
+  homeGoals    Int?
+  awayGoals    Int?
+  lastSyncedAt DateTime      @default(now())
+  picks        Pick[]
+
+  @@index([seasonId, gameweek])
+}
+
+enum PickResult {
+  WIN
+  TIE
+  LOSS
+  DNP
+}
+
+// A single player's weekly pick.
+model Pick {
+  id             String       @id @default(cuid())
+  seasonId       String
+  season         Season       @relation(fields: [seasonId], references: [id])
+  playerSeasonId String
+  playerSeason   PlayerSeason @relation(fields: [playerSeasonId], references: [id])
+  gameweek       Int
+  clubId         String
+  club           Club         @relation(fields: [clubId], references: [id])
+  fixtureId      String
+  fixture        Fixture      @relation(fields: [fixtureId], references: [id])
+  result         PickResult?
+  points         Int?
+  updatedByAdmin Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@unique([playerSeasonId, gameweek])
+}
