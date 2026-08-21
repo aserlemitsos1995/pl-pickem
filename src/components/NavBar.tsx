@@ -24,6 +24,9 @@ export default async function NavBar() {
           <Link href="/history" className="hover:text-purple-700">
             History
           </Link>
+          <Link href="/rules" className="hover:text-purple-700">
+            Rules
+          </Link>
           {player ? (
             <form action={signOutIdentity}>
               <button type="submit" className="max-w-[10rem] truncate text-gray-400 hover:text-purple-700">
