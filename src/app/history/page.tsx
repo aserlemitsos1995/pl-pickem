@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getAllSeasons, getCurrentSeason } from "@/lib/season";
-import { getCurrentPlayer, getCurrentPlayerSeason } from "@/lib/session";
+import { getCurrentPlayer, getCurrentPlayerSeason, isAdminModeUnlocked } from "@/lib/session";
 import { getSeasonGrids, getGameweekPicksGrid, type GameweekPickCell } from "@/lib/picks";
 import { OPPONENT_CAP } from "@/lib/game-logic";
 
@@ -22,7 +22,11 @@ export default async function HistoryPage({
   // that's fine, it just means none of that season's picks are "their own".
   const identity = await getCurrentPlayerSeason(season.id);
 
-  const viewer = { playerSeasonId: identity?.playerSeason.id ?? null, isAdmin: player.isCommissioner };
+  // Being the commissioner isn't enough on its own to see everyone's not-yet-kicked-off picks —
+  // that bypass only applies once admin mode has actually been unlocked with the PIN, so the
+  // commissioner's normal browsing experience matches everyone else's.
+  const isAdmin = player.isCommissioner && (await isAdminModeUnlocked());
+  const viewer = { playerSeasonId: identity?.playerSeason.id ?? null, isAdmin };
   const [grid, gameweekGrid] = await Promise.all([
     getSeasonGrids(season.id, viewer),
     getGameweekPicksGrid(season.id, viewer),
